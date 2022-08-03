@@ -5,7 +5,7 @@ from nextcord.abc import ChannelType, GuildChannel
 from captcha.image import ImageCaptcha
 
 intents = nextcord.Intents.all()
-client = commands.Bot(command_prefix='', intents=intents)
+client = commands.Bot(command_prefix='접두사 입력', intents=intents)
 
 @client.event
 async def on_ready():
