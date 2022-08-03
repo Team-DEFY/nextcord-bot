@@ -6,7 +6,9 @@ pip install nextcord<br>
 pip install sqlite3<br>
 pip install pytz<br>
 pip install datetime<br>
-pip install captcha
+pip install captcha<br>
+pip install os<br>
+pip install asyncio
 
 ## 사용법
 봇의 인텐트 3개를 다 키시고<br>
