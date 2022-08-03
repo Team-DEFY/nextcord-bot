@@ -1,13 +1,11 @@
 from nextcord.ext import commands
 import nextcord, datetime, sqlite3, pytz, random, asyncio, string, os
-from nextcord import ButtonStyle, SlashOption
-from nextcord.utils import get
-from nextcord.ui import Button, View
+from nextcord import SlashOption
 from nextcord.abc import ChannelType, GuildChannel
 from captcha.image import ImageCaptcha
 
 intents = nextcord.Intents.all()
-client = commands.Bot(command_prefix='접두사 입력', intents=intents)
+client = commands.Bot(command_prefix='$', intents=intents)
 
 @client.event
 async def on_ready():
@@ -49,7 +47,7 @@ async def on_message(message):
             image.write(captcha_text, f'{captcha_text}.png')
             embed = nextcord.Embed(title=f"인증!", description=f"아래 이미지의 글씨를 적어주세요!\n제한시간 30초",\
             color=0xd8b0cc,timestamp=datetime.datetime.now(pytz.timezone('UTC')))
-            embed.set_footer(text="Bot made by 시바-스튜디오", icon_url="https://cdn.discordapp.com/attachments/997811966032756778/998133087294734388/73d6085d5acbc7ac.png")
+            embed.set_footer(text="Bot made by", icon_url="푸터 URL")
             file =  nextcord.File(f'{captcha_text}.png')
             await message.reply(embed=embed, file=file)
             os.remove(f'{captcha_text}.png')
@@ -77,7 +75,7 @@ async def hello(inter: nextcord.Interaction, 인증_채널: GuildChannel = Slash
             c.execute("DELETE FROM learn WHERE channel_id=?", (인증_채널.id,))
             embed = nextcord.Embed(title=f"인증 설정이 완료되었어요!", description=f"{인증_채널.mention}의 등록된 인증이 삭제 됬어요!",\
             color=0xd8b0cc,timestamp=datetime.datetime.now(pytz.timezone('UTC')))
-            embed.set_footer(text="Bot made by 시바-스튜디오", icon_url="https://cdn.discordapp.com/attachments/997811966032756778/998133087294734388/73d6085d5acbc7ac.png")
+            embed.set_footer(text="Bot made by", icon_url="푸터 URL")
             return await inter.response.send_message(embed=embed)
         await inter.send("해당 채널에 인증이 등록 되지 않았어요!")
         
