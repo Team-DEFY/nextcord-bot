@@ -7,7 +7,7 @@ from nextcord.abc import ChannelType, GuildChannel
 from captcha.image import ImageCaptcha
 
 intents = nextcord.Intents.all()
-client = commands.Bot(command_prefix='$', intents=intents)
+client = commands.Bot(command_prefix='접두사 입력', intents=intents)
 
 @client.event
 async def on_ready():
@@ -80,3 +80,5 @@ async def hello(inter: nextcord.Interaction, 인증_채널: GuildChannel = Slash
             embed.set_footer(text="Bot made by 시바-스튜디오", icon_url="https://cdn.discordapp.com/attachments/997811966032756778/998133087294734388/73d6085d5acbc7ac.png")
             return await inter.response.send_message(embed=embed)
         await inter.send("해당 채널에 인증이 등록 되지 않았어요!")
+        
+client.run('토큰 입력')
