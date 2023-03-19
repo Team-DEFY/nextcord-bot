@@ -5,7 +5,7 @@ from nextcord.abc import ChannelType, GuildChannel
 from captcha.image import ImageCaptcha
 
 intents = nextcord.Intents.all()
-client = commands.Bot(command_prefix='접두사 입력', intents=intents)
+client = commands.Bot(command_prefix='!', intents=intents)
 
 @client.event
 async def on_ready():
@@ -32,6 +32,29 @@ async def hello(inter: nextcord.Interaction, 인증_역할: nextcord.Role = Slas
         await inter.response.send_message(embed=embed, file=file) 
     else:
         await inter.response.send_message("관리자 권한이 필요합니다!")
+@bot.command()
+@commands.has_permissions(kick_members=True)
+async def 추방(ctx, member: nextcord.Member, *, reason=None):
+    await member.kick(reason=reason)
+    await ctx.send(f'{member}님은 추방되셨습니다.')
+
+@bot.command()
+@commands.has_permissions(ban_members=True)
+async def 밴(ctx, member: nextcord.Member, *, reason=None):
+    await member.ban(reason=reason)
+    await ctx.send(f'{member}님은 차단되셨습니다.')
+@bot.slash_command()
+async def 추방(ctx, member: nextcord.Member, reason: str):
+    await member.kick(reason=reason)
+    await ctx.send(f"{member}님을 추방했습니다. 사유: {reason}")
+@bot.slash_command()
+async def(ctx, amount: int):
+    await ctx.channel.purge(limit=amount)
+    await ctx.send(f"{amount}개의 메시지를 5초뒤에 삭제합니다.", delete_after=5)
+@bot.command()
+async def 청소(ctx, amount: int):
+    await ctx.channel.purge(limit=amount+1)
+    await ctx.send(f"{amount}개의 메시지를 삭제했습니다.")
 
 @client.event
 async def on_message(message):
