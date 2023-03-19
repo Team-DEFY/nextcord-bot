@@ -32,26 +32,26 @@ async def hello(inter: nextcord.Interaction, 인증_역할: nextcord.Role = Slas
         await inter.response.send_message(embed=embed, file=file) 
     else:
         await inter.response.send_message("관리자 권한이 필요합니다!")
-@bot.command()
+@client.command()
 @commands.has_permissions(kick_members=True)
 async def 추방(ctx, member: nextcord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send(f'{member}님은 추방되셨습니다.')
 
-@bot.command()
+@client.command()
 @commands.has_permissions(ban_members=True)
 async def 밴(ctx, member: nextcord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f'{member}님은 차단되셨습니다.')
-@bot.slash_command()
+@client.slash_command()
 async def 추방(ctx, member: nextcord.Member, reason: str):
     await member.kick(reason=reason)
     await ctx.send(f"{member}님을 추방했습니다. 사유: {reason}")
-@bot.slash_command()
+@client.slash_command()
 async def(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
     await ctx.send(f"{amount}개의 메시지를 5초뒤에 삭제합니다.", delete_after=5)
-@bot.command()
+@client.command()
 async def 청소(ctx, amount: int):
     await ctx.channel.purge(limit=amount+1)
     await ctx.send(f"{amount}개의 메시지를 삭제했습니다.")
@@ -101,5 +101,9 @@ async def hello(inter: nextcord.Interaction, 인증_채널: GuildChannel = Slash
             embed.set_footer(text="Bot made by", icon_url="푸터 URL")
             return await inter.response.send_message(embed=embed)
         await inter.send("해당 채널에 인증이 등록 되지 않았어요!")
-        
+@client.slash_command(name='공지')
+    async def (self, ctx, *, message):
+        await ctx.message.delete()
+        embed = nextcord.Embed(title='📢 공지', description=message, color=0x00ff00)
+        await ctx.send(embed=embed)     
 client.run('토큰 입력')
