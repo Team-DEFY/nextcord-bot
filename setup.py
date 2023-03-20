@@ -3,7 +3,7 @@ import nextcord, datetime, sqlite3, pytz, random, asyncio, string, os
 from nextcord import SlashOption
 from nextcord.abc import ChannelType, GuildChannel
 from captcha.image import ImageCaptcha
-
+from dice import *
 intents = nextcord.Intents.all()
 client = commands.Bot(command_prefix='!', intents=intents)
 
@@ -43,12 +43,17 @@ async def 추방(ctx, member: nextcord.Member, *, reason=None):
 async def 밴(ctx, member: nextcord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f'{member}님은 차단되셨습니다.')
-@client.slash_command()
+@client.slash_command(name="추방",description="선택한 사람을 추방합니다.")
 async def 추방(ctx, member: nextcord.Member, reason: str):
     await member.kick(reason=reason)
     await ctx.send(f"{member}님을 추방했습니다. 사유: {reason}")
-@client.slash_command()
-async def(ctx, amount: int):
+@client.slash_command(name="차단",description="유저를 차단할수 있습니다.!")
+@commands.has_permissions(ban_members=True)
+async def 밴(ctx, member: nextcord.Member, reason: str):
+    await member.ban(reason=reason)
+    await ctx.send(f"{member}님을 추방했습니다. 사유: {reason}")
+@client.slash_command(name="청소",description="메세지를 청소합니다.")
+async def ram(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
     await ctx.send(f"{amount}개의 메시지를 5초뒤에 삭제합니다.", delete_after=5)
 @client.command()
@@ -101,9 +106,12 @@ async def hello(inter: nextcord.Interaction, 인증_채널: GuildChannel = Slash
             embed.set_footer(text="Bot made by", icon_url="푸터 URL")
             return await inter.response.send_message(embed=embed)
         await inter.send("해당 채널에 인증이 등록 되지 않았어요!")
-@client.slash_command(name='공지')
-    async def (self, ctx, *, message):
-        await ctx.message.delete()
-        embed = nextcord.Embed(title='📢 공지', description=message, color=0x00ff00)
-        await ctx.send(embed=embed)     
+@client.command()
+async def 주사위(ctx):
+    await ctx.send("주사위를 굴립니다.")
+    await ctx.send(dice())
+@client.slash_command(name="주사위", description="주사위를 굴려요!")
+async def 주사위(ctx):
+    await ctx.send("주사위를 굴립니다.")
+    await ctx.send(dice())
 client.run('토큰 입력')
