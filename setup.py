@@ -109,7 +109,7 @@ async def hello(inter: nextcord.Interaction, 인증_채널: GuildChannel = Slash
 @client.command()
 async def 주사위(ctx):
     result, _color, bot, user = dice()
-    embed = discord.Embed(title = "주사위 게임 결과", description = None, color = _color)
+    embed = nextcord.Embed(title = "주사위 게임 결과", description = None, color = _color)
     embed.add_field(name = client.user.name+"의 숫자", value = ":game_die: " + bot, inline = True)
     embed.add_field(name = ctx.author.name+"의 숫자", value = ":game_die: " + user, inline = True)
     embed.set_footer(text="결과: " + result)
@@ -117,7 +117,7 @@ async def 주사위(ctx):
 @client.slash_command(name="주사위", description="주사위를 굴려요!")
 async def 주사위(ctx):
     result, _color, bot, user = dice()
-    embed = discord.Embed(title = "주사위 게임 결과", description = None, color = _color)
+    embed = nextcord.Embed(title = "주사위 게임 결과", description = None, color = _color)
     embed.add_field(name = client.user.name+"의 숫자", value = ":game_die: " + bot, inline = True)
     embed.add_field(name = ctx.author.name+"의 숫자", value = ":game_die: " + user, inline = True)
     embed.set_footer(text="결과: " + result)
