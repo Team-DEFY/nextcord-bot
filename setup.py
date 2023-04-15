@@ -13,7 +13,12 @@ async def on_ready():
     print(f"{client.user.name}봇은 준비가 완료 되었습니다.")
     print(f"[!] 참가 중인 서버 : {len(client.guilds)}개의 서버에 참여 중")
     print(f"[!] 이용자 수 : {len(client.users)}와 함께하는 중")
-
+# 개발 중
+@client.command()
+async def 도움말():
+embed = nextcord.Embed(title = "봇 도움말", description = "개발자: ", color = _color, thumbmail = "자기 봇 프사 이미지 링크")
+embed.add_field(name = "")
+    await ctx.send(embed=embed)
 @client.slash_command(name="인증추가",description="인증을 설정 하실 수 있습니다!")
 async def hello(inter: nextcord.Interaction, 인증_역할: nextcord.Role = SlashOption(description = "인증 후 지급할 역할을 선택해주세요!"), 인증_메시지: str = SlashOption(description = "인증 할때 메세지를 입력해주세요!"), 인증_채널: GuildChannel = SlashOption(description = "인증할 채널을 선택해주세요!",channel_types = [ChannelType.text])) -> None:
     if inter.user.guild_permissions.administrator:
