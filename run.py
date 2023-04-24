@@ -127,4 +127,5 @@ async def 주사위(ctx):
     embed.add_field(name = "나의 숫자", value = ":game_die: " + user, inline = True)
     embed.set_footer(text="결과: " + result)
     await ctx.send(embed=embed)
+@client.s
 client.run('토큰 입력')
